@@ -23,16 +23,18 @@ import {
     const [pass, setPass] = useState("Password");
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.circle1}></View>
-        <View style={styles.circle2}></View>
-        <View style={styles.circle3}>
-          <Text style={styles.logIn}>Nurse Log-In</Text>
-        </View>
+            <View style={styles.circle1}></View>
+      <View style={styles.circle2}></View>
+      <View style={styles.circle3}></View>
+
+      <View style={styles.circle4}></View>
+      <View style={styles.circle5}></View>
+      <View style={styles.circle6}></View>
         <View>
           <Image source={logo} style={{width:250,height:200,marginTop:"65%"}}/>
         </View>
         <View style={styles.empNo}>
-          <FontAwesomeIcon icon={faUser} size={25} style={{ color: "#ECECEC" }} />
+          {/* <FontAwesomeIcon icon={faUser} size={25} style={{ color: "#ECECEC" }} /> */}
           <TextInput
             onChangeText={setId}
             style={{
@@ -46,7 +48,7 @@ import {
           />
         </View>
         <View style={styles.password}>
-          <FontAwesomeIcon icon={faLock} size={25} style={{ color: "#ECECEC" }} />
+          {/* <FontAwesomeIcon icon={faLock} size={25} style={{ color: "#ECECEC" }} /> */}
           <TextInput
             onChangeText={setPass}
             style={{
@@ -70,11 +72,11 @@ import {
             navigation.navigate("nurseHome");
           }}
         >
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={faFingerprint}
             size={40}
             style={{ color: "#ECECEC" }}
-          />
+          /> */}
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -88,45 +90,79 @@ import {
     },
     circle1: {
       position: "absolute",
-      width: 470,
-      height: 470,
-      left: -50,
+      width: 408,
+      height: 408,
+      right: -80,
       top: -90,
-      opacity: "25%",
+      opacity: 0.25,
       backgroundColor: "#5060F0",
-      borderRadius: "50%",
+      borderRadius: 300,
     },
     circle2: {
       position: "absolute",
-      width:360,
-      height: 360,
-      left: 5,
-      top: -45,
-      opacity: "35%",
+      width: 310,
+      height: 310,
+      right: -30,
+      top: -50,
+      opacity: 0.35,
       backgroundColor: "#5060F0",
-      borderRadius: "50%",
+      borderRadius: 300,
     },
     circle3: {
       position: "absolute",
-      width: 240,
-      height: 240,
-      left:65,
-      top: 10,
+      width: 200,
+      height: 200,
+      right: 25,
+      top: 4,
       backgroundColor: "#5060F0",
-      borderRadius: "50%",
+      borderRadius: 300,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    circle4: {
+      position: "absolute",
+      width: 308,
+      height: 308,
+      left: -143,
+      bottom: 90,
+      opacity: 0.25,
+      backgroundColor: "#5060F0",
+      borderRadius: 300,
+    },
+    circle5: {
+      position: "absolute",
+      width: 200,
+      height: 200,
+      left: -90,
+      bottom: 145,
+      backgroundColor: "#5060F0",
+      borderRadius: 300,
+      opacity: 0.35,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    circle6: {
+      position: "absolute",
+      width: 110,
+      height: 110,
+      left: -53,
+      bottom: 188,
+      backgroundColor: "#5060F0",
+      borderRadius: 300,
+      opacity:0.35,
       alignItems: "center",
       justifyContent: "center",
     },
     logIn: {
       color: "white",
-      fontSize: 24,
-      fontWeight: 700,
+      // fontSize: 24,
+      // fontWeight: 700,
     },
     empNo: {
       marginTop: 50,
       borderBottomWidth: 2,
       borderBottomColor: "#ECECEC",
-      width: "85%",
+      width: "85",
       paddingLeft: 8,
       color: "#ECECEC",
       height: 40,

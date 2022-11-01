@@ -30,7 +30,7 @@ const LoginAs = ({ navigation }) => {
          </Text>
        </TouchableOpacity>
 
-       <TouchableOpacity
+       {/* <TouchableOpacity
         style={styles.recep}
         onPress={() => {
           navigation.navigate("rcLogin");
@@ -39,7 +39,7 @@ const LoginAs = ({ navigation }) => {
         <Text style={{ color: "#ECECEC", fontSize: 18 }}>
           Receptionist
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity style={styles.nurse}  onPress={() => {navigation.navigate("nurseHome")}}>
         <Text style={{ color: "#ECECEC", fontSize: 18 }}>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   nurse: {
-    marginTop: 40,
+    marginTop:360,
     borderBottomWidth: 2,
     borderBottomColor: "#ECECEC",
     width: "85%",
