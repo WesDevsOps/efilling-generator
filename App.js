@@ -8,8 +8,8 @@ import LoginAs from "./components/loginAs";
 // import RcPatientFile from "./components/receptionist/rcPatientFile";
 import NurseHome from "./components/nurse/nurseHome";
 // import RcLogin from "./components/receptionist/rcLogin";
-// import NursePatientFile from "./components/nurse/nursePatientFile";
-
+import NursePatientFile from "./components/nurse/nursePatientFile";
+// import NurseLogin from "./components/nurse/nurseLogIn";
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -26,6 +26,7 @@ const App = () => {
         {/* <Stack.Screen name="rcPatientFile" component={RcPatientFile} /> */}
         <Stack.Screen name="nursePatientFile" component={NursePatientFile} />
         <Stack.Screen name="nurseHome" component={NurseHome} />
+        {/* <Stack.Screen name="nurseLogin" component={NurseLogin} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
