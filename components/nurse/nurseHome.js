@@ -2,7 +2,7 @@ import { SafeAreaView,StyleSheet, View, Text, ScrollView, TextInput, TouchableOp
 
 import React, { useEffect} from "react";
 import { addDoc, collection, getDocs,serverTimestamp } from 'firebase/firestore';
-import { db } from '../config/firebase.js';
+import { auth, db } from '../config/firebase.js';
 
 
 const NurseHome = ({navigation}) => {
@@ -17,7 +17,7 @@ const NurseHome = ({navigation}) => {
         console.log(data.docs.map((results) => (results.data())))
         setPatientInfo(data.docs.map((results) => ({ ...results.data(), id: results.id })));
         setFilteredDataSource(data.docs.map((results) => ({ ...results.data(), id: results.id })));
-
+        console.log(auth.currentUser)
     }
     useEffect(() => {
         getPatientRef()

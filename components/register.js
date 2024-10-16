@@ -5,6 +5,8 @@ import {
   faMailBulk,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
+import { auth, db } from "./config/firebase";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 import { useState } from "react";
@@ -16,40 +18,84 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
+import { addDoc, collection } from "firebase/firestore";
 
 const Register = ({ navigation }) => {
-  const [id, setId] = useState("ID No or Employee No");
-  const [email, setEmail] = useState("Email");
-  const [pass, setPass] = useState("Password");
-  const [cPass, setCpass] = useState("Confirm Password");
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [cPass, setCpass] = useState("");
+  const addUserRef = collection(db, 'Users')
+
+  // const registerUser = () => {
+  //   createUserWithEmailAndPassword(auth, email, password).then(() => {
+  //       const userDetails = {
+  //           id:id,
+  //           email:email,
+  //           pass:password,
+  //           email:email
+  //       }
+
+  //       addDoc(addUserRef,userDetails).then(()=>{
+  //           Alert.alert("Registered successfully");
+  //       }).catch((err)=>{
+  //           console.log(err);
+  //       })
+
+  //       if (password === cPass) {
+  //           navigation.navigate("loginAs")
+  //           Alert.alert("Successfully Logged In")
+  //       } else {
+  //           Alert.alert('Passwords do not match ')
+  //           console.log('Passwords do not match ');
+  //       }
+
+  //   }).catch((error) => {
+  //       Alert.alert(error);
+  //   })
+
+    const registerUser = () => {
+      createUserWithEmailAndPassword(auth,email,password).then(()=>{
+      const UsersCollectionRef = collection(db, "users");
+      const userDetails = {
+        id:id,
+        email:email,
+        pass:password,
+        email:email
+    };
+      addDoc(UsersCollectionRef, userDetails)
+               }).then(()=>{ 
+               Alert.alert("Successfully Registered")}),navigation.navigate("loginAs").catch((error)=> {
+            console.log(error),Alert.alert("Registration unsuccessful");
+        })
+
+    }
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.circle1,{opacity: '25%',borderRadius: '50%',}]}></View>
-      <View style={[styles.circle2,{opacity: '35%',borderRadius: '50%',}]}></View>
-      <View style={[styles.circle3,{borderRadius: '50%',borderRadius: '50%',}]}>
-        <Text
-          style={{color: "white", fontSize: 24, fontWeight: 700,marginTop:250}}
-        >
-          Create Account
-        </Text>
+      <View style={styles.circle1}></View>
+      <View style={styles.circle2}></View>
+      <View style={styles.circle3}>
       </View>
 
-      <View style={[styles.circle4,{ opacity: '25%',borderRadius: '50%',}]}></View>
-      <View style={[styles.circle5,{opacity: '35%',}]}></View>
-      <View style={[styles.circle6,{borderRadius: '50%',opacity:'50%'}]}></View>
+      <View style={styles.circle4}></View>
+      <View style={styles.circle5}></View>
+      <View style={styles.circle6}></View>
       
-      <View style={[styles.empNo,{width: '85%',}]}>
+      <View style={styles.empNo}>
         <FontAwesomeIcon icon={faUser} size={20} style={{ color: "#ECECEC" }} />
         <TextInput
-          onChangeText={setId}
+          onChangeText={(text)=>setId(text)}
           style={{
             color: "#ECECEC",
             width: "90%",
-            paddingLeft: 70,
+            paddingLeft: 40,
             height: 30,
           }}
-          placeholder={id}
+          placeholder="ID No or Employee No"
           placeholderTextColor="#ECECEC"
         />
       </View>
@@ -60,28 +106,28 @@ const Register = ({ navigation }) => {
           style={{ color: "#ECECEC" }}
         />
         <TextInput
-          onChangeText={setEmail}
+          onChangeText={(text)=>setEmail(text)}
           style={{
             color: "#ECECEC",
             width: "90%",
-            paddingLeft: 120,
+            paddingLeft: 40,
             height: 40,
           }}
-          placeholder={email}
+          placeholder="Email"
           placeholderTextColor="#ECECEC"
         />
       </View>
       <View style={[styles.password,{ width: '85%',}]}>
         <FontAwesomeIcon icon={faLock} size={25} style={{ color: "#ECECEC" }} />
         <TextInput
-          onChangeText={setPass}
+          onChangeText={(text)=>setPassword(text)}
           style={{
             color: "#ECECEC",
             width: "90%",
-            paddingLeft: 110,
+            paddingLeft: 40,
             height: 40,
           }}
-          placeholder={pass}
+          placeholder="Password"
           placeholderTextColor="#ECECEC"
         />
       </View>
@@ -92,29 +138,26 @@ const Register = ({ navigation }) => {
           style={{ color: "#ECECEC" }}
         />
         <TextInput
-          onChangeText={setCpass}
+          onChangeText={(text)=>{setCpass(text)}}
           style={{
             color: "#ECECEC",
-            width: "90%",
-            paddingLeft: 80,
+            width: 200,
+            paddingLeft:40,
             height: 40,
           }}
-          placeholder={cPass}
+          placeholder="Confirm Password"
           placeholderTextColor="#ECECEC"
         />
       </View>
       <View>
       <Text
         style={{ color: "#ECECEC", marginTop: 20 }}
-        onPress={() => {navigation.navigate("login");}}> Already have an account?</Text>
-
+        onPress={() => {navigation.navigate("nurseLogin");}}> Already have an account?</Text>
       </View>
       
       <TouchableOpacity
         style={styles.finger}
-        onPress={() => {
-          navigation.navigate("login");
-        }}
+       onPress={()=>registerUser()}
       >
         <FontAwesomeIcon
           icon={faFingerprint}
@@ -123,6 +166,7 @@ const Register = ({ navigation }) => {
         />
       </TouchableOpacity>
     </SafeAreaView>
+    // <Text>uhdiughiudhg</Text>
   );
 };
 const styles = StyleSheet.create({
@@ -134,61 +178,75 @@ const styles = StyleSheet.create({
   },
   circle1: {
     position: "absolute",
-    width: 479,
-    height: 479,
-    left: -50,
-    top: -245,
+    width: 408,
+    height: 408,
+    right: -80,
+    top: -90,
+    opacity: 0.25,
     backgroundColor: "#5060F0",
+    borderRadius: 300,
   },
   circle2: {
     position: "absolute",
-    width: 390,
-    height: 390,
-    left: -10,
-    top: -220,
+    width: 310,
+    height: 310,
+    right: -30,
+    top: -50,
+    opacity: 0.35,
     backgroundColor: "#5060F0",
+    borderRadius: 300,
   },
   circle3: {
     position: "absolute",
-    width: 250,
-    height: 250,
-    left: 63,
-    top: -140,
+    width: 200,
+    height: 200,
+    right: 25,
+    top: 4,
     backgroundColor: "#5060F0",
+    borderRadius: 300,
     alignItems: "center",
+    justifyContent: "center",
   },
   circle4: {
     position: "absolute",
-    width: 508,
-    height: 508,
-    left: -50,
-    top: 290,
+    width: 308,
+    height: 308,
+    left: -143,
+    bottom: 90,
+    opacity: 0.25,
     backgroundColor: "#5060F0",
-    
+    borderRadius: 300,
   },
   circle5: {
     position: "absolute",
-    width: 410,
-    height: 410,
-    left: 0,
-    top: 340,
+    width: 200,
+    height: 200,
+    left: -90,
+    bottom: 145,
     backgroundColor: "#5060F0",
-    
+    borderRadius: 300,
+    opacity: 0.35,
+    alignItems: "center",
+    justifyContent: "center",
   },
   circle6: {
     position: "absolute",
-    width: 300,
-    height: 300,
-    left: 55,
-    top: 396,
+    width: 110,
+    height: 110,
+    left: -53,
+    bottom: 188,
     backgroundColor: "#5060F0",
+    borderRadius: 300,
+    opacity:0.35,
     alignItems: "center",
+    justifyContent: "center",
   },
 
   empNo: {
-    marginTop: 350,
+    marginTop:"54%",
     borderBottomWidth: 2,
     borderBottomColor: "#ECECEC",
+    width: "85%",
     paddingLeft: 8,
     color: "#ECECEC",
     height: 40,
@@ -196,8 +254,7 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     backgroundColor: "#3939d7",
-    borderRadius: 10,
-    height: 50,
+    borderRadius: 7,
   },
   email: {
     marginTop: 30,
@@ -211,7 +268,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#3939d7",
     borderRadius: 10,
-    height: 50,
+    height: 40,
   },
   cPassword: {
     marginTop: 30,
@@ -225,12 +282,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#3939d7",
     borderRadius: 10,
-    height: 50,
+    height: 40,
   },
   password: {
     marginTop: 30,
     borderBottomWidth: 2,
     borderBottomColor: "#ECECEC",
+    width: "85%",
     paddingLeft: 8,
     color: "#ECECEC",
     height: 40,
@@ -238,20 +296,19 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     backgroundColor: "#3939d7",
-    borderRadius: 10,
-    height: 50,
+    borderRadius: 7,
   },
   finger: {
-    width: 90,
-    height: 130,
+    width: 55,
+    height: 80,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "#ECECEC",
     borderRadius: 8,
     backgroundColor: "#3939d7",
-    marginTop: 40,
-    marginLeft: 200,
+    marginTop: 10,
+    marginLeft: 255,
   },
 });
 

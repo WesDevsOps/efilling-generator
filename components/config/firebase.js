@@ -5,13 +5,13 @@ import {getFirestore} from 'firebase/firestore'
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC0aTL2YL1r3R3zn2bpihy-ozEkt7_DchY",
-  authDomain: "hospital-app-45eac.firebaseapp.com",
-  projectId: "hospital-app-45eac",
-  storageBucket: "hospital-app-45eac.appspot.com",
-  messagingSenderId: "557064098526",
-  appId: "1:557064098526:web:2d4900253e236e5822a84f",
-  measurementId: "G-XY019EB2EH"
+  apiKey: "AIzaSyCfHsicooOPMST7G9RqSmbmVBKqkF0aMl0",
+  authDomain: "help-app-48982.firebaseapp.com",
+  projectId: "help-app-48982",
+  storageBucket: "help-app-48982.appspot.com",
+  messagingSenderId: "331065274156",
+  appId: "1:331065274156:web:bff238b7ab472bddfb0689",
+  measurementId: "G-ZGYSHGRRG1"
 };
 
 // Initialize Firebase

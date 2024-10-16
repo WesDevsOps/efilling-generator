@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, View, Text, ScrollView, Pressable } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, ScrollView, Pressable, Alert } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native";
 import { Button } from "react-native";
 import React from "react";
@@ -11,61 +11,49 @@ import { Picker } from "@react-native-picker/picker";
 
 const NursePatientFile = ({ navigation,route }) => {
     const [agree, setAgree] = useState(false);
+    const [condition, setCondition]=React.useState("");
+    const [nurseNotes,setNurseNotes]=React.useState("");
     const { patient } = route.params;
     let today = new Date();
 
     const [data, setData] = React.useState([])
-    const patientRef = collection(db, "patients")
+    const patientRef = collection(db, "records")
+
 
     const getPatientRef = async () => {
         const data = await getDocs(patientRef)
 
         console.log(data.docs.map((results) => (results.data())))
         setData(data.docs.map((results) => ({ ...results.data(), id: results.id })));
-
-
     }
     useEffect(() => {
         getPatientRef()
 
     }, []);
-    // const records = [
-    //     {
-    //         date: today,
-    //         patient: patient.fullName,
-    //         syptoms: "fever* or feeling feverish/chills, sore throat, cough, runny or stuffy nose, muscle or body aches, fatigue (tiredness), body aches, chills, cough, fatigue, fever",
-    //         condition: patient.condition,
-    //         date: "Mon Oct 24 2022"
-    //     },
-    //     {
-    //         date: today,
-    //         patient: patient.fullName,
-    //         syptoms: "fever* or feeling feverish/chills, sore throat, cough, runny or stuffy nose, muscle or body aches, fatigue (tiredness), body aches, chills, cough, fatigue, fever",
-    //         condition: patient.condition,
-    //         date: "Tue Oct 25 2022"
-    //     },
-    //     {
-    //         date: today,
-    //         patient: patient.fullName,
-    //         syptoms: "fever* or feeling feverish/chills, sore throat, cough, runny or stuffy nose, muscle or body aches, fatigue (tiredness), body aches, chills, cough, fatigue, fever",
-    //         condition: patient.condition,
-    //         date: "Mon Oct 24 2022"
-    //     },
-    //     {
-    //         date: today,
-    //         patient: patient.fullName,
-    //         syptoms: "fever* or feeling feverish/chills, sore throat, cough, runny or stuffy nose, muscle or body aches, fatigue (tiredness), body aches, chills, cough, fatigue, fever",
-    //         condition: patient.condition,
-    //         date: "Tue Oct 25 2022"
-    //     },
-    //     {
-    //         date: today,
-    //         patient: patient.fullName,
-    //         syptoms: "fever* or feeling feverish/chills, sore throat, cough, runny or stuffy nose, muscle or body aches, fatigue (tiredness), body aches, chills, cough, fatigue, fever",
-    //         condition: patient.condition,
-    //         date: "Wed Oct 26 2022"
-    //     }
-    // ]
+    
+    const AddRecord = () =>{
+
+        const Patient ={
+            idno:patient.idno,
+            fullName:patient.fullName,
+            phoneNumber:patient.phoneNumber,
+            physicalAddress:patient.physicalAddress,
+            nextOfKin:patient.nextOfKin,
+            notes:"Receptionist: "+patient.notes+", Nurse: "+nurseNotes,
+            condition:condition,
+            date:today.toString().substring(0,15)
+        };
+    
+        addDoc(patientRef,Patient).then(()=>{
+            console.log('patient added');
+            Alert.alert("successfully added");
+        }).catch((err)=> {
+            console.log(err);
+            Alert.alert('Something went wrong')
+          })
+        }
+
+
     const [nurseAdd, setNurseAdd] = React.useState(false)
     console.log(agree)
     return (
@@ -106,7 +94,9 @@ const NursePatientFile = ({ navigation,route }) => {
                                                     <Text>Add notes</Text></TouchableOpacity>
                                             ) : (
                                                 <View>
-                                                    <TextInput placeholder="Notes by nurse" style={{ width: "98%", height: 42, backgroundColor: "#2827D3", borderRadius: 5, placeholderTextColor: "white", paddingLeft: 10, color: "white", margin: 10, alignSelf: "center" }}>
+                                                  <TextInput placeholder="Notes by nurse"  
+                                                    onChangeText={(text)=>setNurseNotes(text)}
+                                                    style={{ width: "98%", height: 42, backgroundColor: "#2827D3", borderRadius: 5, paddingLeft: 10, color: "white", margin: 10, alignSelf: "center" }}>
                                                     </TextInput>
                                                     <TouchableOpacity style={styles.btn}>
                                                         <Text>Save</Text>
@@ -119,10 +109,8 @@ const NursePatientFile = ({ navigation,route }) => {
                                         <Text style={{ color: "white" }}></Text>
                                     )
                                 )
-                             }
-                            
+                             }                            
                             })
-
                         }
                     </ScrollView>
                 </View>
@@ -141,10 +129,9 @@ const NursePatientFile = ({ navigation,route }) => {
                     title="Share"
                     style={{ width: 300 }}
                     disabled={!agree}
-                    onPress={() => {
-                        /* Do something */
-                    }}
+                    onPress={() =>AddRecord()}
                 />
+
 
                 <View style={{ alignSelf: "stretch", marginTop: 20, backgroundColor: "#5060F0", borderRadius: 15, height: 300, marginBottom: 30 }}>
                     <Text style={{ color: "white", marginLeft: 10 }}>Patient Medical history</Text>
@@ -168,7 +155,7 @@ const NursePatientFile = ({ navigation,route }) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={{ width: 246, height: 41, backgroundColor: "#5060F0", borderRadius: 5, justifyContent: "center", marginBottom: 20 }} onPress={() => navigation.navigate("loginAs")}>
+            <TouchableOpacity style={{ width: 246, height: 41, backgroundColor: "#5060F0", borderRadius: 5, justifyContent: "center", marginBottom: 20 }} onPress={() => navigation.navigate("nurseHome")}>
                 <Text style={{ alignSelf: "center", color: "white" }}>Close</Text>
             </TouchableOpacity>
         </SafeAreaView>

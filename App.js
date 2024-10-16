@@ -9,7 +9,13 @@ import LoginAs from "./components/loginAs";
 import NurseHome from "./components/nurse/nurseHome";
 // import RcLogin from "./components/receptionist/rcLogin";
 import NursePatientFile from "./components/nurse/nursePatientFile";
-// import NurseLogin from "./components/nurse/nurseLogIn";
+import Login from "./components/login";
+import NurseLogin from "./components/nurse/nurseLogin";
+import Register from "./components/register";
+import DcLogin from "./components/doctor/dcLogin";
+import DcHome from "./components/doctor/dcHome";
+import docPaitentFilee from "./components/doctor/docPatientFile";
+
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -19,14 +25,15 @@ const App = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="loginAs" component={LoginAs} />
-        {/* <Stack.Screen name="rcLogin" component={RcLogin} /> */}
-        {/* <Stack.Screen name="register" component={Register} /> */}
-        {/* <Stack.Screen name="rcHome" component={RcHome} /> */}
-        {/* <Stack.Screen name="rcPatientFile" component={RcPatientFile} /> */}
+        <Stack.Screen name="loginAs" component={LoginAs} />  
+        <Stack.Screen name="register" component={Register} />
         <Stack.Screen name="nursePatientFile" component={NursePatientFile} />
         <Stack.Screen name="nurseHome" component={NurseHome} />
-        {/* <Stack.Screen name="nurseLogin" component={NurseLogin} /> */}
+        <Stack.Screen name="nurseLogin" component={NurseLogin}/>
+        <Stack.Screen name="dcLogin" component={DcLogin} />
+        <Stack.Screen name="dcHome" component={DcHome} />
+        <Stack.Screen name="docPatientFile" component={docPaitentFilee} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

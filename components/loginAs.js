@@ -41,13 +41,13 @@ const LoginAs = ({ navigation }) => {
         </Text>
       </TouchableOpacity> */}
 
-      <TouchableOpacity style={styles.nurse}  onPress={() => {navigation.navigate("nurseHome")}}>
+      <TouchableOpacity style={styles.nurse}  onPress={() => {navigation.navigate("nurseLogin")}}>
         <Text style={{ color: "#ECECEC", fontSize: 18 }}>
           Nurse
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.doctor}>
+      <TouchableOpacity style={styles.doctor} onPress={() => {navigation.navigate("dcLogin")}}>
         <Text style={{ color: "#ECECEC", fontSize: 20 }}>
           Doctor
         </Text>
